@@ -1,0 +1,46 @@
+What I did:
+
+This was a very tough lab. I was able to solve it after getting hints from other
+players. It was kind of funny, we were creating directories with messages in the
+file name to communicate, since everyone has permission to create files in that
+directory. The prompt was the same as the last two labs. You view the cronjob by
+reading the /etc/cron.d/cronjob_bandit24 file. Then you see that it executes a
+single script called /usr/bin/cronjob_bandit24.sh. Then you read that shell
+script. Here is the script:
+
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo "Executing and deleting all scripts in /var/spool/$myname:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+	echo "Handling $i"
+	timeout -s 9 60 ./$i
+	rm -f ./$i
+    fi
+done
+
+As you can see it's iterating through all the files within the
+/var/spool/bandit24 directory, executing them, and then removing them. The key
+to this lab is the fact that the cronjob is executing all scripts within the
+directory so you can make your own script which writes /etc/bandit_pass/bandit24
+to a file that you have access to. The cronjob runs as bandit24 so it has access
+to the password file while you as user bandit23 don't.
+
+I made this script:
+
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 >> /tmp/my_dir/passwords
+
+I had to quickly chmod 777 the script file in order for the cronjob to be able
+to execute it. Because by default when I save a file in emacs it does not set
+execution permissions.
+
+I then used tail on the /tmp/my_dir/passwords file and waited for it to update
+with the new password.
+
+bandit24 password: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ

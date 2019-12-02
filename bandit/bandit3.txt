@@ -1,0 +1,9 @@
+What I did:
+
+Same deal here as with the previous two bandits. The problem here is that the
+file begins with a period so it's hidden. You could have used "ls -a ./" to find
+it if you were in the /home/bandit3/inhere/ directory. The hidden file is
+"/home/bandit3/inhere/.hidden".
+
+
+bandit4 password: pIwrPrtPN36QITSp3EQaw936yaFoFgAB

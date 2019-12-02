@@ -1,0 +1,17 @@
+What I did:
+
+I used this link as a source:
+
+https://medium.com/secttp/overthewire-bandit-level-31-e3b82064285a
+
+The shell converts all input to uppercase which is a big problem because
+the shell commands are case sensitive. This link showed me that I could enter
+"$0" into the terminal to reset it so that it's a normal sh shell again. After
+this you can just cat the password file for the next level. The $0 variable
+stores the shell name. $0 does not contain any letters that can be converted to
+upper case by the shell so entering $0 is like executing the command "sh" which
+resets the terminal in this case.
+
+This was the last lab in the bandit series as of 11/08/2019.
+
+bandit33 password: c9c3199ddf4121b10cf581a98d51caee

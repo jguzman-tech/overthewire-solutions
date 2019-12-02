@@ -1,0 +1,20 @@
+What I did:
+
+When you git clone this repo the README.md this time said that you have to push
+a file key.txt with contents "May I come in?". So I created the key.txt file
+then added it with:
+
+git add key.txt
+
+There was an error message because of my .gitignore so I removed the *.txt
+rule. After this I was able to add key.txt. Then I committed my changes with:
+
+git commit -a
+
+Finally I pushed with:
+
+git push origin master
+
+When I ran this command the remote responded with the password. 
+
+bandit32 password: 56a9bf19c63d650ce78e6ec0354ee45e

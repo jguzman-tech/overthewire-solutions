@@ -1,0 +1,20 @@
+What I did:
+
+Like for the last bandit lab I made a directory within tmp and then cloned the
+repo with:
+
+git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+
+I read the README.md file and this time it's password was redacted. My first
+thought was maybe there is another branch I could checkout that has the
+password. There were no other branches so I checked the git log with the "git
+log" command. This showed me there were commits. I checked them out using their
+commit hashes with:
+
+git checkout <some-hash>
+
+Once you checkout a commit you can explore the repo again which in this case
+contains only a README.md file. It turned out that there was a password "leak"
+in the 2nd commit. One of the commiters was named "Ben Dover", very funny.
+
+bandit29 password: bbc96594b4e001778eee9975372716b2

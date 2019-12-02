@@ -1,0 +1,9 @@
+What I did:
+
+This was very quick. My initial thought was to cat the whole file and then use
+grep to filter for the word "millionth" but I first checked the size of the file
+with "ls -lah data.txt". This told me the file size was 4.0 MB. My only concern
+was execution speed but 4.0 MB is still small so I executed "cat data.txt | grep
+millionth" to get the password.
+
+bandit8 password: cvX2JJa4CFALtqS87jk27qwqGhBM9plV

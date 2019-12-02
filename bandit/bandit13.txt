@@ -1,0 +1,17 @@
+What I did:
+
+We are given the ssh private key of bandit14. So the whole task here is really
+just to figure out how to ssh into a server by specifying a non-default private
+key and then to read the /etc/bandit_pass/bandit14 file to get the password. I
+logged into the server as bandit 14 with:
+
+ssh -o "IdentitiesOnly=yes" -i sshkey.private bandit14@localhost
+
+It took me a couple attempts. Because I couldn't resolve the hostname
+bandit.labs.overthewire.org and I didn't realize that I needed the -o
+"IdentitiesOnly=yes" option there to override the default private key. A third
+quick thing was that it wouldn't let me use port 2220 to connect like it does
+for logging into the bandit server from my local device, so I had to take off
+the -p 2220 option.
+
+bandit14 password: 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e

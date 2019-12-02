@@ -1,0 +1,11 @@
+What I did:
+
+I made my own directory as suggested by the prompt in the tmp directory. This
+lab required first getting the raw data from the hexdump then getting into a
+loop of checking the file type (with command "file <some-file>") and then
+decompressing the file. I believe it took 8 steps of decompression and the
+details of the commands are not too important. There was a mixture of gzip,
+bzip2, and tar compression. I knew that I was done when the file command gave me
+the output: "data8.bin: ASCII text".
+
+bandit13 password: 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL

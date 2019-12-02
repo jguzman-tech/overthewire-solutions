@@ -1,0 +1,11 @@
+As with the previous wargame I used Ctrl+U to view source. This time there was
+nothing but a pixel.png file was I didn't notice when viewing the page. Viewing
+this image showed nothing exciting. It was indeed just a single pixel. I even
+tried downloading it thinking maybe there was some metadata containing the
+password.
+
+I did notice that the pixel.png file was within a ./files folder. When I opened
+this I saw that there was a file called users.txt. I found the password there.
+
+natas3 password: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+

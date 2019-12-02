@@ -1,0 +1,102 @@
+In this lab it says that the cookies are protected by XOR encryption. The
+inverse of XOR encryption is another round of XOR encryption.
+
+Certainly the concept was simple but it was tough to figure out how to do. I had
+to pull out a pen and paper to get the answer. You have two known values in this
+case:
+
+1. The default array: array( "showpassword"=>"no", "bgcolor"=>"#ffffff")
+
+2. The encoded version of this default array which you can obtain by submitting
+   the form with #ffffff as the input and examining your new cookie. This string
+   is: ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D
+
+With xor encryption:
+
+a ^ b ^ a = b
+
+If you examine the php source code for this lab you'll see the following:
+
+a = json_encode(array( "showpassword"=>"no", "bgcolor"=>"#ffffff"))
+
+b = $key (with wraparound)
+
+a ^ b =
+base64_decode("ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D")
+
+Once we have this key we need to generate the cookie value.
+
+payload_cookie = base64_encode(json_encode($data) ^ $key)
+
+Note that I used ^ above to represent calls to xor_encryption and not pure
+xor.
+
+The following is the code I used to solve this problem based on the original
+source code:
+
+<?php
+
+$cookie = array("data" => "ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D");
+$_REQUEST = array("bgcolor" => "#ffffff");
+$defaultdata = array( "showpassword"=>"no", "bgcolor"=>"#ffffff");
+
+function xor_encrypt($in, $key) {
+    $text = $in;
+    $outText = '';
+
+    // Iterate through each character
+    for($i=0;$i<strlen($text);$i++) {
+        $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+
+function loadData($def, $key) {
+    global $cookie;
+    echo "loading data\n";
+    $mydata = $def;
+    if(array_key_exists("data", $cookie)) {
+        $tempdata = json_decode(xor_encrypt(base64_decode($cookie["data"]), $key), true);
+        if(is_array($tempdata) && array_key_exists("showpassword", $tempdata) && array_key_exists("bgcolor", $tempdata)) {
+            if (preg_match('/^#(?:[a-f\d]{6})$/i', $tempdata['bgcolor'])) {
+                $mydata['showpassword'] = $tempdata['showpassword'];
+                $mydata['bgcolor'] = $tempdata['bgcolor'];
+            }
+        }
+    }
+    echo "loaded data\n";
+    return $mydata;
+}
+
+function saveData($d, $key) {
+    $cookie['data'] = base64_encode(xor_encrypt(json_encode($d), $key));
+}
+
+$key = xor_encrypt(base64_decode($cookie['data']), json_encode($defaultdata));
+echo "key = $key\n";
+$key = "qw8J";
+echo "key = $key\n";
+$y = base64_encode(xor_encrypt(json_encode(array( "showpassword"=>"yes", "bgcolor"=>"#ffffff")), $key));
+echo "payload cookie = $y\n";
+
+# check our work
+$cookie = array("data" => $y);
+$data = loadData($defaultdata, $key);
+print_r($data);
+echo "Done\n";
+
+As you can see I hard coded in the value of the key after running it the first
+time. The raw key my code calculated was
+"qw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8JqL". It's clearly a pattern and I
+wasn't sure why the last character was L. I now know that it's because when the
+cookie is output the = character is converted to %3D.
+
+The payload cookie this code outputs is:
+
+ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK
+
+I used the EditThisCookie browser extension for google chrome to change the
+value of the cookie named data to that of my payload cookie.
+
+natas12 password: EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3

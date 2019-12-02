@@ -1,0 +1,23 @@
+When you visit the site for this lab you are told that you're logged in as a
+regular user and that you must login as an admin to receive the natas22
+password. You are also given a link for a colocated website and some source
+code.
+
+The source code shows nothing useful. It just prints out the natas22 password if
+you have the cookie of an admin much like the last several levels. However, the
+colocated website has a web form which may be exploitable.
+
+Since the website are colocated they are hosted on the same machine. This means
+a phpsession should be accessible from one to the other. The colocated website
+has a css experimentor where you enter some form values and the css of the page
+will change, and this change is saved on the server with a phpsessid. You are
+given the code for this colocated website.
+
+The code for the colocated website is insecure because it will write whatever
+parameters are given to the $SESSION. I used inspect element to change one of
+the form input names to admin and set the value to 1. I then submitted this form
+and copied the key to the other tab were I had the main lab website, using the
+EditThisCookie browser extension. When I reloaded the page, I retrieved the
+password. 
+
+natas22 password: chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ

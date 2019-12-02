@@ -1,0 +1,25 @@
+In this lab you are given a form where you can change your name. It will keep
+the state with a cookie so it will tell you if you are logged as a regular user
+and your name. But again if you login as an admin then you are given the
+password to the next level.
+
+Brute forcing will not work on this lab since it uses the built-in PHPSESSID
+generator. This stumped me for a while so I took to the overthewire irc. A user
+told me to look closely at how files were written.
+
+The flaw in this lab is that the site does not use any input validation on the
+name input and it read/writes data in a simplistic way.
+
+To input data it goes through the $SESSION keys of which there is either just
+"name" or "admin" and "name". Then it writes to a the filename given by the
+cookie in the format: "$key $value\n" for all keys. They are read in this way
+too. What if you have a name of "admin\nadmin 1\n"? Well, the session will be
+written to the file as "name admin\nadmin 1\n" and then when read back our
+session name will be set to admin and our session admin boolean will be set to
+1. This will trigger print_credentials() so we will get the next password.
+
+To do this I changed <input name="name" from the form to <textarea name="name"
+so that my browser would allow me to insert multiple lines. Then I just reloaded
+the page and had the next password. No code or curl commands necessary!
+
+natas21 password: IFekPyrQXftziDEsUr3x21sYuahypdgJ

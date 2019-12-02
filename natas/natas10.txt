@@ -1,0 +1,37 @@
+This lab seems the same as the last lab except it filters the characters in
+'/[;|&]/'. This does not include the dollar sign. So I may be able to set $key
+to a superglobal variable but I cannot index anything because square brackets
+are filtered.
+
+At first glance I thought that forward slashes were filtered. This is not
+actually the case. Only three characters are filtered, they are the semicolon,
+the pipe character, and ampersand. I tried for a while to edit cookies thinking
+that I could set the $key variable equal to a cookie that I have full access
+to. This was a dead end because I'm pretty sure input like
+$_COOKIE['some_cookie'] was being literally converted into a string. The
+solution was much simpler than this.
+
+If you view the source of the php provided you'll see that the command being
+executed is "grep -i $key dictionary.txt". The grep output is being sent to the
+webpage without filtration. Instead of using cat in a 2nd command to get our
+password we can use grep.
+
+I submitted this text through the form:
+
+-E "" /etc/natas_webpass/natas11 #
+
+This then generates the command:
+
+grep -i -E "" /etc/natas_webpass/natas11 # dictionary.txt
+
+-E "" in this case passes an empty string regex filter to grep and then I give
+the file path of the next password. An empty string is basically null filter so
+it prints the contents of the /etc/natas_webpass/natas11 file. I used the #
+character to comment out dictionary.txt since we don't care about it.
+
+A simpler form input is just: "" /etc/natas_webpass/natas11
+
+Since I didn't use any extra regex features available with -E and you can just
+ignore the dictionary.txt matches.
+
+natas11 password: U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK

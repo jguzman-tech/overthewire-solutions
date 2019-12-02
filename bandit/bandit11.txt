@@ -1,0 +1,14 @@
+What I did:
+
+for x in `cat bandit11_data.txt`
+do echo `echo $x | tr a-z n-za-m | tr A-Z N-ZA-M`
+done
+
+This is a small example and you're given the letter rotation number you could do
+by hand or better yet with python which you do have access to on the server. I
+wanted to figure out the bash way to do it. This post on stackoverflow helped
+me:
+https://stackoverflow.com/questions/20481162/edit-ascii-value-of-a-character-in-bash. The
+tr command here is used to replace ranges of characters with another.
+
+bandit12 password: 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu

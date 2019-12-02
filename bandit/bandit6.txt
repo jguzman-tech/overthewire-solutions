@@ -1,0 +1,10 @@
+What I did:
+
+Learning from the previous bandit I tried the find command first. "find /
+33c" yielded too many results so I decided to filter based on user also with
+"find / -size 33c -user bandit7". This still gave too many results so I filtered
+by group "find / -size 33c -user bandit7 -group bandit6". This only gave me one
+file that I had access to: "/var/lib/dpkg/info/bandit7.password". I used cat on
+this file to get the password.
+
+bandit7 password: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs

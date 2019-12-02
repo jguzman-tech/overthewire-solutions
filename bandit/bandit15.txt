@@ -1,0 +1,10 @@
+What I did:
+
+This link showed me how to use the openssl commands:
+https://www.sslshopper.com/article-most-common-openssl-commands.html
+
+I used this one based on the link: "openssl s_client -connect
+localhost:30001". I then typed the bandit15 password into the terminal and it
+gave me the new password. 
+
+bandit 16 password: cluFn7wTiGryunymYOu4RcffSxQluehd

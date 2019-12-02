@@ -1,0 +1,27 @@
+What I did:
+
+You are given the key for bandit26 in the home directory of bandit25. I explain
+how to do this in my bandit16 write-up but here's the command:
+
+ssh -o "IdentitiesOnly=yes" -i bandit26.sshkey bandit26@localhost
+
+This host instantly logs you out each time after displaying the welcome message.
+
+Initially I googled how to execute single commands through an ssh connection but
+this had no effect. The shell in use by the bandit26 host is really just a more
+command. This link helped me out:
+https://medium.com/@coturnix97/overthewires-bandit-25-26-shell-355d78fd2f4d. A
+good tip for future labs is using the following command to find out the default
+shell of a user:
+
+cat /etc/passwd | grep bandit26
+
+I'll let the link explain the rest. But for accessing a terminal in bandit26
+know that you need to hit v to enter vi, enter :set shell=/bin/bash to the vi
+command-line, and then :shell.
+
+I was not a fan of this lab. In what real-world situation would anyone make a
+login shell like this? Sure, it required some out of the box thinking since I
+would have kept trying to execute bash or powershell commands.
+
+bandit26 password: 5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z

@@ -1,0 +1,23 @@
+What I did:
+
+I opened up two terminals. On the first I started listening on port 12345 with
+this command:
+
+<prompt>$ nc -l -p 12345
+
+On the second terminal I executed:
+
+<prompt>$ ./suconnect 12345
+
+Then on the first terminal I entered the password for bandit20. After a couple
+seconds of delay I saw the bandit21 message get printed from the first
+terminal.
+
+The trick here is to pay very close attention to the wording of the message
+provided by running ./suconnect with no arguments: "This program will connect to
+the given port on localhost using TCP. If it receives the correct password from
+the other side, the next password is transmitted back." The suconnect is the
+"client" and you have to provide a "server" for this lab which can be done by
+using nc with the listen option. This tripped me up for a while.
+
+bandit21 password: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr

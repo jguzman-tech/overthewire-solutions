@@ -1,0 +1,13 @@
+What I did:
+
+The other git labs were very quick for me but I was stuck on this one. There are
+no branches or commits to look at to view the password for this lab. This link
+showed me how to get the password in this case:
+
+https://medium.com/secttp/overthewire-bandit-level-30-7ee3996ce583
+
+Unbeknownst to me, git has a tagging feature. Tags are usually used to save old
+commits. I have a little experience with git from my internship but we never
+used tags as far as I know.
+
+bandit31 password: 47e603bb428404d265f59c42920d81e5

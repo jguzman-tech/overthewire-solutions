@@ -1,0 +1,12 @@
+When you log into natas5 the page says that you're disallowed because you're not
+logged in. As we should all know websites keep track of whether you're logged in
+or not through cookies stored on your local computer.
+
+I checked the cookies by opening the JavaScript console and entering
+"document.cookie". One of the cookies that I could see was
+"loggedin=0". Changing the value of document.cookie is sadly also blocked by
+default in Google Chrome. I downloaded a Google Chrome extension called
+EditThisCookie and changed the value of loggedin to 1. After this I reloaded the
+page in order to get the password.
+
+natas6 password: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1

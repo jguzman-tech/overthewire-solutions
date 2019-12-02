@@ -1,0 +1,10 @@
+What I did:
+
+The work for this one was identical to bandit19 once you access the terminal as
+described in my bandit25 explanation. You simply run bandit27-do with a command
+behind it. It will be run with bandit27 rights so you can just cat the next
+password with:
+
+./bandit27-do cat /etc/bandit_pass/bandit27
+
+bandit27 password: 3ba3118a22e93127a4ed485be72ef5ea

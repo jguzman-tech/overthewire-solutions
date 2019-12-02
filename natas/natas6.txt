@@ -1,0 +1,14 @@
+In this lab you are greeted with a form labeled "Input secret:" and a link to
+"View sourcecode". Using Ctrl+U won't help you here but when you click on the
+view sourcecode link you can see the php code that's executed for the post
+request submitted by the form.
+
+At the top of the php snippet you will see:
+
+include "includes/secret.inc"
+
+You can open this file on your browser to view the secret by visiting:
+
+http://natas6.natas.labs.overthewire.org/includes/secret.inc
+
+natas7 password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9

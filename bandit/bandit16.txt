@@ -1,0 +1,42 @@
+What I did:
+
+#!/bin/bash
+for((i=31000;i<32001;i++))
+do
+    message=`echo "" | nc localhost $i -w 2 2>&1`
+    # We have a successful connection
+    if [[ $message != "localhost [127.0.0.1] $i (?) : Connection refused" ]]
+    then echo "$i: success!"
+         echo "$i: success!" >> good_ports.txt
+    fi
+done
+
+This was the bash I used to iterate through all the ports and find which ones
+were accepting connections. This showed me the two ports accepting connections
+which were 31518 and 31790. I then used the command:
+
+openssl s_client -connect localhost:<port-number>
+
+This gave me no response for port 31518 but trying port 31790 gave me the
+private key shown below. I saved this key in a file and had to use the following
+command to log into the server:
+
+ssh -o "IdentitiesOnly=yes" -i rsa.key bandit17@localhost
+
+Where rsa.key is the file where I saved the key. Note that the header and footer
+for the key are necessary. When prompted for a passphrase by ssh enter
+nothing. I saved this key locally and created a bash alias of the command needed
+for later. Note that when you log into the server remotely you need to connect
+to port 2220 while if you're already on the machine you don't.
+
+bandit17 credentials:
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJimZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQJa6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTuDSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbWJGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNXx0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvDKHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBlJ9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovdd8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nCYNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8AvLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama+TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnxSatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHdHCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+ExdvtSghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0AR57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDiTtiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCgR8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiuL8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Niblh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkUYOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0bdxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+
+Edit: I learned that the password for each user is stored in
+/etc/bandit_pass/<username>. So after logging into bandit17 with the ssh key you
+can get the passworth with "cat /etc/bandit_pass/bandit17" and log in with it.
+
+bandit17 password: xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn

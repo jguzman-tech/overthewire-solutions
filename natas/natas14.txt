@@ -1,0 +1,27 @@
+In this lab you are greeted to another simple form along with a link to view the
+source code as is usual. You are asked to enter in a username and password. If
+you enter a wrong password you'll be given an Access Denied message after
+submitting the form.
+
+If you look at the source code you'll see this code for the sql query in the
+backend:
+
+$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and
+password=\"".$_REQUEST["password"]."\"";
+
+You'll notice that there is no input validation for this query. The code just
+checks that the number of selected rows is greater than 0 before giving us the
+natas15 password. So, it is ripe for sql injection. I tried a couple queries, it
+seemed like comments weren't working so I created a tautology for both username
+and password by submitting:
+
+OR "1" = "1
+
+The query which is executed will be this:
+
+SELECT * FROM users where username="" OR "1" = "1" and password="" OR "1" = "1"
+
+The "1" = "1" is true for every row in the database so all the rows will be
+selected by the query.
+
+natas15 password: AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J

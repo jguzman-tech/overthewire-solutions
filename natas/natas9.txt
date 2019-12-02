@@ -1,0 +1,23 @@
+The webpage for this lab looks like it's doing simple dictionary searches. But
+if you click on the view source link you'll see that the webpage is executing a
+shell command with:
+
+passthru("grep -i $key dictionary.txt");
+
+However, it does not filter $key, which the user sets via form input. So we
+can inject shell code by prepending whatever command we want with a semicolon.
+
+I messed around for quite a while trying to find out what I could do. The
+solution in this case is to cat the password. All the passwords are located in
+the /etc/natas_webpass/ directory. I was confused as there is also a
+/etc/natas_pass/ directory but I couldn't access it. If you run a command that
+natas9 does not have permission to run you cannot see the errors in the webpage.
+
+I was able to obtain the password by running:
+
+""; ls -lah /etc/natas_webpass; cat /etc/natas_webpass/natas10;
+
+Although now I know that the quotes at the beginning, and of course the ls
+command were unnecessary.
+
+natas10 password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu

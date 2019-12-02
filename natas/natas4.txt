@@ -1,0 +1,21 @@
+This was a tricky one. The page clearly tells you what to do though. It tells
+you that it knows you came from the url "" when you need to come from
+http://natas5.natas.labs.overthewire.org in order to access the page. After some
+googling I learned that this means you need to change the referrer. There are
+several ways to do this but they are all blocked on modern browsers to prevent
+abuse. The referrer was "" for me because I pasted the url into my browser so I
+wasn't "referred" by any webpage. I tried adding a meta tag to the page and then
+I tried using the JavaScript console but these methods were blocked in both
+Google Chrome and Firefox. I even tried using curl but I couldn't figure out how
+to get past the JavaScript password prompt.
+
+The solution that I came up with is going to that url:
+http://natas5.natas.labs.overthewire.org hitting cancel on the dialogue box and
+then using inspect element to insert the link into the page. When I clicked this
+link I am quite literally coming form the specified url so I was given the
+password.
+
+I did download a referrer editor browser extension but then thought of the above
+which seemed like a nice low-tech solution.
+
+natas5 password: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq

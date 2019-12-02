@@ -1,0 +1,10 @@
+What I did:
+
+This was a very simple lab. All you had to do was clone the repository. I made a
+directory within /tmp/ in the bandit server then cloned the repo with:
+
+git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+
+After this I read the file ./repo/README which contained the password.
+
+bandit28 password: 0ef186ac70e04ea33b4c1853d2526fa2

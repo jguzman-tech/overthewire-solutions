@@ -1,0 +1,6 @@
+What I did:
+
+All I did was login as bandit0 and opened the /home/bandit0/readme
+file. Don't worry the challenges get much harder.
+
+bandit1 password: boJ9jbbUNNfktd78OOpsqOltutMc3MY1

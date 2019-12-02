@@ -1,0 +1,15 @@
+What I did:
+
+This was a very quick task for me. I had used the nc command before all this lab
+required was:
+
+bandit14@bandit:~$ echo "4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e" | nc localhost 30000
+Correct!
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+
+bandit14@bandit:~$
+
+You can echo strings and pipe them into nc to send it to the specified host and
+port number.
+
+bandit15 password: BfMYroe26WYalil77FoDi9qh59eK5xNr

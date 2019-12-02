@@ -1,0 +1,9 @@
+What I did:
+
+This took me several attempts. I did not realize that using * with ls does not
+match files that start with periods. I was trying to use "ls -lah
+./maybehere*/*" which skipped over all the hidden inner files. So I used "find *
+-size 1033c". Which gave me the output "maybehere07/.file2". I catted this file
+to get the bandit6 password.
+
+bandit6 password: DXjZPULLxYr17uwoI01bNLQbtFemEgo7

@@ -1,0 +1,45 @@
+In this lab you are given just a webpage with a source code link and nothing
+else. If you look at the source code you'll see the following php snippets.
+
+<?
+session_start();
+
+if(array_key_exists("revelio", $_GET)) {
+    // only admins can reveal the password
+    if(!($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1)) {
+    header("Location: /");
+    }
+}
+?>
+
+<?
+    if(array_key_exists("revelio", $_GET)) {
+    print "You are an admin. The credentials for the next level are:<br>";
+    print "<pre>Username: natas23\n";
+    print "Password: <censored></pre>";
+    }
+?>
+
+So, the only way to get the password seems to be if you have the $_GET key named
+revelio and a $SESSION key named admin equal to 1. It's not possible for us to
+set this session variable since there's no way to inject keys into the session.
+
+I searched online for a hint and saw this link:
+https://n0j.github.io/2017/03/22/otw-natas-22.html. This user used the burp
+suite for a local-proxy, which is overkill for this assignment.
+
+It turns out that the code after the header() call is still executing because
+you're supposed to put exit() afterwards. But in your browser you're given the
+redirect so you don't see the password. I opened wireshark with "ip.addr ==
+176.9.9.172" as a filter. This is the ip address of the lab website. I saw the
+password in the first http response from the server after visiting
+http://natas22.natas.labs.overthewire.org/?revelio=1 in my browser.
+
+I did think about using curl before, this would have also solved the problem
+since it doesn't redirect pages like a normal browser.
+
+The curl command:
+
+curl -u natas22:chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ 'http://natas22.natas.labs.overthewire.org?revelio=1'
+
+natas23 password: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE

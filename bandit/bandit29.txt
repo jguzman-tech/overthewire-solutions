@@ -1,0 +1,19 @@
+What I did:
+
+I created a new directory within /tmp/ on the server and then cloned the repo
+with:
+
+git clone git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+
+I checked the README.md file within the repo and it had a redacted password. The
+git log showed only one other commit to master and it didn't have the password
+either so I checked what branches there were with:
+
+git branch -a
+
+This listed all of the branches. When I checked out the remotes/origin/dev
+branch I was able to view the password in ./repo/README.md. Remember that to use
+git commands you need to be within the directory of the repository which in this
+case is just repo folder.
+
+bandit30 password: 5b90576bedb2cc04c86a9e924ce42faf

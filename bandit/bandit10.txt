@@ -1,0 +1,7 @@
+What I did:
+
+As soon as I saw that the prompt said the file was encoded in base64 I looked up
+the man page for base64 and decoded the file with "base64 -d data.txt" which
+printed the one line to the terminal with the password.
+
+bandit11 password: IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR

@@ -1,0 +1,16 @@
+What I did:
+
+scp -P 2220 bandit18@bandit.labs.overthewire.org:/home/bandit18/readme ./    
+
+This was another very quick lab. I've used scp quite a lot. The scp command uses
+an ssh tunnel to transfer files to and from a server. I had to lookup how to
+specify a non-standard port. Notice the capital -P instead of -p for ssh.
+
+The scp takes the form "scp <source> <destination>". The remote server takes the
+same form as ssh with <username>@<hostname>:<filepath> and for your local device
+you just need to state the filepath. For my source I specified a file on the
+remote server so the command knows I want to copy the readme file. And for my
+destination I specified the current directory so I copied it properly. The file
+contained only one line which was the password.
+
+bandit19 password: IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x

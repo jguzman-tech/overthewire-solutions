@@ -1,0 +1,28 @@
+Who am I:
+
+The procedure is similar to bandit21. I first catted the file called
+/etc/cron.d/cronjob_bandit23 which gave me:
+
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+
+So I catted /usr/bin/cronjob_bandit23.sh:
+
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+
+The whoami command gives the username of the user who executes it. Since this is
+bandit23's crontab we can execute the next command to get the output of the tmp
+file:
+
+cat /tmp/`echo I am user bandit23 | md5sum | cut -d ' ' -f 1`
+
+This command gives the next password.
+
+bandit23 password: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n

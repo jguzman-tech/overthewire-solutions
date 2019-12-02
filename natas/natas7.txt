@@ -1,0 +1,11 @@
+In this challenge the page only contains two links. But they don't lead to
+anywhere interesting, just identical pages. If you view source with Ctrl+U you
+can see a comment that says the password is in /etc/natas_webpass/natas8. This
+makes sense once you see the link source:
+
+<a href="index.php?page=home">Home</a>
+
+So I inspected element and changed home to /etc/natas_webpass/natas8 and then
+clicked this link to get the password.
+
+natas8 password: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe

@@ -1,0 +1,26 @@
+What I did:
+
+for((i=1;i<num_lines;i++))
+do
+    my_line=`sed -n ${i}p < data.txt | tr -d '\0'`
+    match=`echo $my_line | grep "=="`
+if [[ ${#match} -gt 0 ]]
+then
+    echo "$i: "
+    echo "'$my_line'"
+    echo ""
+fi
+done
+
+My script here is very similar to what I had for bandit8. The tricky part here
+was the fact that you had a bunch of non-ascii characters. I saw the strange
+character represented as ^B in my terminal from the string "'z"==========
+truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk'". I thought this was an error at first, and I
+kept getting "bash: warning: command substitution: ignored null byte in input"
+from echoing the my_line variable. I removed null bytes with the tr command. ONe
+of the lines that contained two equal signs said password and then had some
+non-ascii characters. I did try this for the bandit10 login, it didn't work. It
+did turn out that the end of the first line shown with the ^B was the real
+password.
+
+bandit10 password: truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk

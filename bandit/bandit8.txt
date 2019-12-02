@@ -1,0 +1,38 @@
+What I did:
+
+num_lines=$((`cat data.txt | grep -cE ".*"`))
+for((i=1;i<num_lines;i++))
+do
+    my_line=`sed -n ${i}p < data.txt`
+    matches=`cat data.txt | grep -cE $my_line`
+if [[ $matches -eq 1 ]]
+    then
+    echo "$i: $my_line"
+fi
+done
+
+[When completing the challenge I inserted this code as two commands with
+semicolons instead of newlines. You can also write one line at a time into the
+terminal. I would use shell scripts files if I could save files on the server.]
+
+So the first step here was making a simple for loop from 1 to the number of
+lines in the file. Then I grab a line by it's number with the second command and
+put this into the variable my_line. I count the number of matches of that line
+in the file and then check if there is only a single match. In which case I
+print the line. This gave me the output "712:
+UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR".
+
+This took me several attempts for three reasons. One was that this message kept
+looping in the terminal "bash: fork: retry: Resource temporarily unavailable"
+after a couple seconds of this I canceled the script each time. It turns out the
+machine must have been trying to parallelize the process for me which is not
+allowed on the server. Second was that I was checking if the number of lines was
+zero in the if statement. Simple mistake I know. It also took some googling to
+figure out how to isolate a line in the file. The last issue for me was that you
+need this sed command like this: "sed -n $1p < data.txt" which isolates the
+first line. But I needed a variable line number $i, in bash you use $<variable>
+to get the value of a variable. But when I tried "sed -n $ip < data.txt" it was
+searching for a variable named ip which didn't exist. So that's why I access it
+with ${i}.
+
+bandit9 password: UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR

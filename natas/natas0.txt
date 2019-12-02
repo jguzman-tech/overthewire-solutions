@@ -1,0 +1,7 @@
+I was confused for a second because the page once you login said that the
+password could be found on the page but the page was otherwise blank. You can
+see the password as an html command if you view the source of the page. Ctrl+U
+is a shortcut for this in google chrome.
+
+natas1 password: gtVrDuiDfck831PqWsLEZy5gyDz1clto
+
