@@ -1,0 +1,16 @@
+In this lab you are given a webpage with a form where you enter a
+password. You're given a link to source code again. In the source code you'll
+see that it will print the password for the next level if the following
+condition is met:
+
+strstr($_REQUEST["passwd"],"iloveyou") && ($_REQUEST["passwd"] > 10 )
+
+I initially tried "iloveyouaaa" since that contains the "iloveyou" substring and
+has a length longer than 10. This didn't work. I looked up the strstr function
+and it does check if a substring exists. But string to int comparisons are weird
+in php. Apparently, all strings that don't start with a number evaluate to 0,
+and if it does start with a number than the value is that number. See this link:
+
+https://stackoverflow.com/questions/672040/comparing-string-to-integer-gives-strange-results
+
+natas24 password: OsRmXFguozKpTZZ5X14zNO43379LZveg
