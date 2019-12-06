@@ -1,0 +1,23 @@
+In this lab your task is to decode these .csv files that a keylogger records and
+get the text message that were sent. The .csv files have only two columns, the
+first column is a timestamp, and the second is a keypad code. 
+
+keys.h tells you how the keypad codes are recorded. It's kind of confusing at
+first but imagine that Santa, the sender of these texts is using one of those
+old flip phones. In those phones you had to repeatedly press a key to cycle
+through letters and until you stopped pressing the same key. It's the same idea
+here. I initially tried writing a solution in c with read_sequence.c but decided
+to switch to python with read_sequence.py. Python is more familiar to me and
+quicker to program with. 
+
+My code didn't figure out how to parse the same date as the example smsX.txt
+files but this was not necessary for retrieving the flag. Reading my code and
+comments within that will give you more details. Running:
+
+python3 read_sequence.py sms4.csv
+
+gave me this output:
+
+date: 1999-11-23 03:38:06
+to: 00611015550117
+text: alright pal heres ye flag good luck entering it with those hooves lol its aotw{l3ts_dr1nk_s0m3_eggn0g_y0u_cr4zy_d33r}
