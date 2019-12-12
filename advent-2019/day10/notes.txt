@@ -1,0 +1,36 @@
+I attempted this lab. I've found links online for several decompilers. IDA Pro
+is supposed to be the best one however it costs money. I tried installing retdec
+via snap. It was highly recommended online, is open source, and is free. I also
+installed it by downloading the zip from github but I could not figure out how
+to execute it from there afterwards.
+
+To execute it on my machine I did:
+
+/snap/retdec/1/bin/retdec-decompiler.py <elf-file>
+
+The 326c15f8884fcc13d18a60e2fb933b0e35060efa8a44214e06d589e4e235fe34 which was
+provided for this lab is an elf file by the way. The problem is that it's 64-bit
+and the retdec version that was at least included in snap cannot interpret
+64-bit elf files, only 32-bit ones.
+
+So, I'm moving on. After advent is over all will be revealed. I can look into
+whatever writeup is posted.
+
+Outside help is prohibited for these advent challenges because it's supposed to
+be a team competition. So no help on the irc channel. And ppl might roast you on
+reddit for asking for spoilers.
+
+I followed the steps on the link here to execute my code instruction by
+instruction:
+
+https://reverseengineering.stackexchange.com/questions/3815/reversing-elf-64-bit-lsb-executable-x86-64-gdb
+
+Use istep or inext to execute a single instruction once you find the start
+point. I noticed that it was looping a good number of times from 4006d0 to
+400727. I made comments in executable.asm. However I just could not understand
+what the assembly was doing. And there is apparently data loss when you generate
+a human-readable via objdump so I will probably not be able to edit the
+executeable.asm and re-compile into elf 64-bit. I am very interested in this
+write up. Hopefully it won't be too technical for me.
+
+I will prioritize the labs with the highest number of solves.
