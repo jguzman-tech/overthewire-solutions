@@ -1,0 +1,73 @@
+natas26 server steps:
+
+* start session
+
+* check if the drawing cookie exists
+
+** get the image file name in the form "img/natas26_" + seesion_id() + ".png"
+
+** draw the image (custom function)
+
+*** image is drawn based off the value of the "drawing" cookie
+
+**** $drawing=unserialize(base64_decode($_COOKIE["drawing"]));
+
+**** setcookie("drawing",base64_encode(serialize($drawing)));
+
+** show the image (custom function)
+
+** store the image (custom function)
+
+When I ran print_r(unserialize(base64_decode($_COOKIE["drawing"]))) on my local php terminal I got this as output:
+
+Array
+(
+    [0] => Array
+        (
+            [x1] => 0
+            [y1] => 0
+            [x2] => 50
+            [y2] => 50
+        )
+)
+
+Note that I replaced $_COOKIE["drawing"] with the value of the cookie stored on my machine.
+
+By the output we can see that drawing contains an inner array with keys x1, x2,
+y1, y2. This means that drawing contains a list of line coordinates which makes
+sense since the form lets us draw multiple lines.
+
+I know that PHP objects can be serialized. I'm not sure if this will allow us to
+execute a constructor. 
+
+We can use this to our advantage by following the example from:
+
+https://blog.ripstech.com/2018/php-object-injection/
+
+We create our own object, set the attributes we want, and then serialize it and
+set it as our cookie. The example also shows a logging class which will insert
+text into a file. We can put php code in the log file.
+
+We can set $logFile to the image that will be displayed, and the $exitMsg to
+the php code we want to inject. Remember that __destruct will still be called on
+the unserialzed object by the server. So we just need to use the Logger class
+which is similar to the one shown in the example. 
+
+Get the entire serialization and deserialization working on your local machine
+with the Logger class before you try injecting it online.
+
+This still didn't work. I knew that I was on the right track but I had to look
+up what I was doing wrong. This link helped me:
+https://secwriteups.blogspot.com/2014/11/natas-26.html
+
+There were two issues with my approach:
+
+1. You have to use urlencode to escape special characters for cookies. I should
+   have realized this from previous challenges.
+
+2. I have to use my own file within the ./img/ directory. Because the
+   ./img/natas26_$PHPSESSID.png one is overwritten by the program most likely.
+
+I have included the code I used to test my approach in natas26.zip.
+
+natas27 password: 55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ
