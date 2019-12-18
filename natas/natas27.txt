@@ -1,0 +1,31 @@
+There are at least two ways to solve this lab.
+
+The page gives you a simple webform where you login with a username and
+password. If the account already exists then it will give you the
+password. After examining the code you'll see that the web page does properly
+escape special characters for mysql queries using the mysql_real_escape_string
+function. So SQL injection is not an option here.
+
+However there are some unsafe things with the queries. You'd assume that the
+username is unique however the select queries use the asterisk wildcard. There
+is never a check for how many rows are grabbed. The logical approach is to
+somehow create a duplicate natas28 account then hope that multiple rows are
+grabbed when you login with this duplicate account, printing out credentials for
+both the real natas28 and your duplicate.
+
+I couldn't figure out how to do this since the SQL queries were safe. And I did
+not see any logical PHP errors. So I searched up how to do this. The more
+elegant solution is to create an account with the username of natas28 + 64
+spaces + a. Credit goes to the owner of this link
+https://n0j.github.io/2017/07/20/otw-natas-27.html for discovering this.
+
+A more interesting solution is to spam query the website since you are told in a
+comment that the database is reset every 5 minutes. So you have a race condition
+where you can I guess create a natas28 account with a blank password and then
+login with this account after the real one is written to the database. It's much
+less reliable. I created an infinite loop to do this in bash. It took about 3000
+curl requests but it may be quicker if you were to try it. It's very much based
+on luck. Credit goes to the owner of http://muffsec.com/blog/?p=287 for coming
+up with this approach.
+
+natas28 password: JWwR438wkgTsNKBbcJoowyysdM82YjeF
