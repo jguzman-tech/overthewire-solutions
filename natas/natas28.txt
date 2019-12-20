@@ -1,0 +1,63 @@
+You are given a web page where you can enter text into a form and it will search
+for matches of your string in a joke database. To do this it redirects you to a
+search.php page. It contains a query field in the url query string. We know that
+this value is encrypted. When I entered the following URL to my web browser it
+responded with "Incorrect amount of PKCS#7 padding for blocksize":
+
+http://natas28.natas.labs.overthewire.org/search.php/?query=
+
+I knew for sure that the SQL query would look something like "SELECT * FROM
+<table> WHERE <joke-field> LIKE '%<user-input>%' ORDER BY RANDOM"
+
+I gathered this because it was clear that quotes and other special characters
+were properly escaped. The following are some URL and query field results.
+
+are:
+
+http://natas28.natas.labs.overthewire.org/search.php/?query=G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPJWevL15C3wBgqCyjhh6ZKDmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo%3D
+
+http://natas28.natas.labs.overthewire.org/search.php/?query=G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPJWevL15C3wBgqCyjhh6ZKDmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo%3D
+
+computer:
+
+http://natas28.natas.labs.overthewire.org/search.php/?query=G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLOxD5BEouuJBr2svTs3MqTiW3pCIT4YQixZ%2Fi0rqXXY5FyMgUUg%2BaORY%2FQZhZ7MKM%3D
+
+http://natas28.natas.labs.overthewire.org/search.php/?query=G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPLOxD5BEouuJBr2svTs3MqTiW3pCIT4YQixZ%2Fi0rqXXY5FyMgUUg%2BaORY%2FQZhZ7MKM%3D
+
+are:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPJWevL15C3wBgqCyjhh6ZKDmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo=
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPJWevL15C3wBgqCyjhh6ZKDmi4rXbbzHxmhT3Vnjq2qkEJJuT5N6gkJR5mVucRLNRo=
+
+computer:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPLOxD5BEouuJBr2svTs3MqTiW3pCIT4YQixZ/i0rqXXY5FyMgUUg+aORY/QZhZ7MKM=
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPLOxD5BEouuJBr2svTs3MqTiW3pCIT4YQixZ/i0rqXXY5FyMgUUg+aORY/QZhZ7MKM=
+
+a:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPKriAqPE2++uYlniRMkobB1vfoQVOxoUVz5bypVRFkZR5BPSyq/LC12hqpypTFRyXA=
+
+b:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPIYiwNnSJY7KHJGU+XjuMzVvfoQVOxoUVz5bypVRFkZR5BPSyq/LC12hqpypTFRyXA=
+
+bytes:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPKPeS+Ab4CzcZ+AArWu6/qqrDuHHBxEg4a0XNNtno9y9GVRSbu6ISPYnZVBfqJ/Ons=
+
+Two bytes:
+
+G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPKdo9Mm1TpHRYYqItyU+PGMoJUi8wHPnTascCPxZZSMWpc5zZBSL6eob5V3O1b5+MA=
+
+Notice how each query value starts with
+"G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjPK". I learned that this means ECB
+encryption is being used. Which means that each block of text is encrypted
+individually. I was lost on how to proceed from this point. I was able to obtain
+the password with code provided by the owner of this blog
+https://blog.anshumanonline.com/natas29/. He can explain it better than I can. I
+could not have obtained the password on my own. 
+
+natas29 password: airooCaiseiyee8he8xongien9euhe8b

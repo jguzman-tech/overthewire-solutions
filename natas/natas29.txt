@@ -1,0 +1,14 @@
+In this web page you're given a form where you can select one of 5 different
+perl files to view. When you select an option the perl is loaded into the web
+page. The perl code does not looks useful and it's a ton to read. It looks like
+there are jokes and irc chat messages mixed into the code. 
+
+It looks like I've hit the limit of my knowledge with natas challenges
+27-29. This lab requires you to know perl. I could tell that the page is using
+perl to open local files but did not know how you could inject pipes into
+perl. I've never used perl before. I also noticed that the web page was
+filtering "natas" literally. Since I tried visiting:
+http://natas29.natas.labs.overthewire.org/index.pl?file=/etc/natas_webpass/natas30
+and it responded with "meeeeep!".
+
+natas30 password: wie9iexae0Daihohv8vuu3cei9wahf0e

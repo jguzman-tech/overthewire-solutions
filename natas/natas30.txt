@@ -1,0 +1,21 @@
+This was another tricky lab. You really need to have some perl experience to be
+able to complete it. In this lab you are given a web form where you can enter a
+username and password. You are also given some source code. The logic of the
+source code looked sound. If you are able to correctly guess the password then
+the webpage will give you the password for natas31.
+
+We know at least that there is a user named natas31 in the database. The
+vulnerability in this case would have to be something involving
+sql-injection. The DBI::quote method is supposed to safely escape characters for
+the query. This link showed me how to solve the lab:
+https://security.stackexchange.com/questions/175703/is-this-perl-database-connection-vulnerable-to-sql-injection.
+
+Ludisposed explains it best but the flaw here is that perl's param function can
+return an array. So we can provide multiple password arguments to bypass this
+web page.
+
+I used this curl command to obtain the password:
+
+curl -u natas30:wie9iexae0Daihohv8vuu3cei9wahf0e -d "username=natas31&password='lol' or 1&password=2" http://natas30.natas.labs.overthewire.org
+
+natas31 password: hay7aecuungiuKaezuathuk9biin0pu1
