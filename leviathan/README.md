@@ -19,5 +19,5 @@ next lab to progress. The leviathan set of labs is supposed to be linux and bash
 focused but not require much programming experience. This is similar to the
 bandit labs, however it's supposed to be significantly more challenging.
 
-For each of these labs I'll provide a .doc, .pdf, and the relevant source code
+For each of these labs I'll provide a .odt, .pdf, and the relevant source code
 files I used to solve the challenge.
