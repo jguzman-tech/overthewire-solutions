@@ -34,3 +34,57 @@ executeable.asm and re-compile into elf 64-bit. I am very interested in this
 write up. Hopefully it won't be too technical for me.
 
 I will prioritize the labs with the highest number of solves.
+
+December 23rd update:
+
+* This is the proper way to set memory:
+
+(gdb) whatis *0x7fffffffe338 returns int, which is 32-bits wide on x86_64.
+set *(int64_t *)0x7fffffffe338 = 0x7fffffffe130
+
+* Set a break at memory address with:
+
+(gdb) break *<hex-address>
+
+* I'm pretty sure that the mistake would have to be in the main portion of the
+  assembly.
+
+* The 40058e instruction seems to be the culprit. It sets the rcx register to
+  $0x112210f47de98115. I'm pretty sure this is just a literal value. It is the
+  int value 1234567890123456789. Which seems very arbitrary.
+
+* IMPORTANT: My idea is to loop through possible alternative values of rcx and
+  see which one gives me readable ascii. Hopefully the answer is the smallest
+  possible value.
+
+** You should be able to execute a set of gdb instructions via a script
+
+*** see:
+    https://stackoverflow.com/questions/14226563/how-to-read-and-execute-gdb-commands-from-a-file
+
+*** If this works then you can grep the output somehow and check that AOTW{}
+    contains only printable characters.
+
+* There are only 3 jump instructions within main. They are all jne
+  instructions. 
+
+* Output from 1-1000 run:
+
+joseph@joseph-ThinkPad-E580:~/overthewire-solutions/advent-2019/day10$ ./find_right_rcx.sh 
+Match on attempt 56
+Match on attempt 253
+Match on attempt 260
+Match on attempt 274
+Match on attempt 367
+Match on attempt 452
+Match on attempt 634
+Match on attempt 684
+Match on attempt 749
+Match on attempt 783
+Match on attempt 825
+Match on attempt 862
+Match on attempt 871
+
+* After about an hour I was able to make it through 7300 attempts.
+
+** This is likely not the real solution.
