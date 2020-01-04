@@ -1,0 +1,17 @@
+Hurray, I was actually able to solve this one without looking up a solution!
+
+All that was required was running the program once with ltrace:
+
+ltrace ./level3
+
+Then examing the strcmp and:
+
+./level3
+password: snlprintf
+cat /etc/leviathan_pass/leviathan3
+
+Remember that like gdb ltrace does not get the owner's permissions even if
+the setuid bit is set.
+
+leviathan4 password: vuH0coox6m
+
