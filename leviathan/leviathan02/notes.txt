@@ -1,0 +1,18 @@
+This link again helped me:
+
+https://jhalon.github.io/over-the-wire-leviathan/
+
+leviathan2@leviathan:/tmp/cool_tmp$ ~/printfile "./my_dir /etc/leviathan_pass/leviathan3"
+/bin/cat: ./my_dir: No such file or directory
+Ahdiemoo1j
+leviathan2@leviathan:/tmp/cool_tmp$ pwd
+/tmp/cool_tmp
+leviathan2@leviathan:/tmp/cool_tmp$
+
+I was able to decompile this code also. I knew the fault had to be with
+"/bin/cat %s" but I tried to see if I could insert multiple commands with a
+cmd-line arg of "; /etc/leviathan_pass/leviathan3"
+
+These leviathan labs are tough.
+
+Leviathan3 password: Ahdiemoo1j
