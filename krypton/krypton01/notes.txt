@@ -1,0 +1,18 @@
+There are only two files located in /krypton/krypton1 they are:
+
+README and krypton2
+
+README is just an intro message. It tells to try these krypton exercising
+without using "cryptool first". I've never heard of cryptool, it would be good
+to learn. It also says that krypton2 contains ROT13 cyphertext.
+
+The code I used to solve this lab is in decypher.py.
+
+Technically decyphering and cyphering is done with exactly the same process so
+decypher.py is a misnomer. Example: The ascii value of A is 65, plus 13 is 78 (N), plus 13
+again is 91 so we wrap back around to 65 (A). 
+
+joseph@joseph-ThinkPad-E580:~/overthewire-solutions/krypton/krypton01$ ./decypher.py 
+plaintext = LEVEL TWO PASSWORD ROTTEN
+
+krypton2 password: ROTTEN

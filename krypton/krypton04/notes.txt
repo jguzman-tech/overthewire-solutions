@@ -1,0 +1,26 @@
+The README tells is that the last few cyphers have been monoalphabetic. But this
+one will be polyalphabetic, a Vigenère Cypher.
+
+A Vigenère Cypher is actually pretty simple. Your key will be a string. You
+cycle through this string and add each character to the plaintext (with
+wraparound), and that's it. Here's a simple example from the README.
+
+P     15 17 14 2  4  4  3 12  4 4  19  8 13 6  0  18 0  6 17 4 4   3
+K     6  14 11 3  6 14 11  3  6 14 11  3  6 14 11  3 6 14 11 3 6  14
+C     21 5  25 5 10 18 14 15 10 18  4 11 19 20 11 21 6 20  2 8 10 17
+
+We are given three cyphertext files they are found1, found2, and krypton5. The
+README also tells us the key length is 5.
+
+The HINT file tells us that we should still be using Frequency Analysis but we
+should treat it as 6 different mono-alphabetic cyphers. So we won't immediately
+be able to read words. It will be much harder to do by hand, but it looks like
+we are given plenty of sample text. It will take persistence...
+
+By hand I don't care to do this. Making a tool to crack this would be cool
+though. I'm using the tool at: http://www.cryptoprograms.com/subsolve/periodic
+
+I'll need to comebine all of the text though. I'll do that in a python
+script. The script combined all three files and I filled gaps with
+"X". Thankfully the sample size was large enough to not throw off the tool. The
+key was "FREKEY" and the password for krypton 5 is "CLEARTEXT".

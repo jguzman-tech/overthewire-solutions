@@ -1,0 +1,12 @@
+The README tells us that this is another polyalphabetic cipher but the key size
+is unknown...
+
+I tried immediately using the tool at
+http://www.cryptoprograms.com/subsolve/periodic again without processing the
+text at all. I couldn't assist the tool by lining up all of the text. After a
+minute it seemed like it was cycling through some anagrams but then I saw the
+guess "KEYLENGTH" come up and I paused the program. The keys and passwords for
+these labs are often cryptography related so I used that key on just the
+krypton6 file.
+
+krypton6 password: RANDOM

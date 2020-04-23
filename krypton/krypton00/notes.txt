@@ -1,0 +1,16 @@
+It looks like it couldn't get easier than this. Our base64 string is
+"S1JZUFRPTklTR1JFQVQ=". This should be a simple php call to
+base64_decode().
+
+And it is!
+
+joseph@joseph-ThinkPad-E580:~/overthewire-solutions/krypton/krypton00$ php -a
+php -a
+Interactive mode enabled
+
+php > echo base64_decode("S1JZUFRPTklTR1JFQVQ=");
+echo base64_decode("S1JZUFRPTklTR1JFQVQ=");
+KRYPTONISGREAT
+php >
+
+krypton1 password: KRYPTONISGREAT

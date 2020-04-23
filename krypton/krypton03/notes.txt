@@ -1,0 +1,110 @@
+The README says that you could have encrypted the entire alphabet and I guess
+reversed the encryption by hand. This may have taken less time.
+
+This time it won't be a simple substitution cypher. The file krypton4 contains
+the cyphertext for the key. There are three other files found1, found2, and
+found3 which are also encrypted with the same key. The message plaintexts are in
+English. They are very long too so you can use English letter frequencies to
+help you. You also know that each one will be a readable message and not random
+text.
+
+There are two other files in this directory called HINT1 and HINT2. I'm sure
+they hold useful information.
+
+HINT1: "Some letters are more prevalent in English than others."
+
+No shit Sherlock.
+
+HINT2: "\"Frequency Analysis\" is your friend."
+
+Alright so I was on the right track already.
+
+I'll make a script to do this following:
+
+* Find the frequency of each char (ignore spaces) between all three foundX
+  files.
+
+* Sort this list.
+
+* Hardcode a list of English letters sorted by frequency.
+
+* Remap each char in krypton4 to it's corresponding index in this hardcoded
+  list.
+
+* Win!
+
+Dilemma: For the hardcoded normal frequency list do we want the frequency based
+on words in the dictionary? Or based on words in written text? These values are
+different because certain short words are used much more often, like "the",
+"of", and "and".
+
+* Doing both shouldn't take long but I'll first try the text frequency. 
+
+* It gets even more nuanced than this. According to wikipedia. I'm going with
+  EOTHASINRDLUYMWFGCBPKVJQXZ. Which wikipedia lists first.
+
+* That gave me this string: GELLU AIETR ELEVE LFAYS MOHHG ASUNH PSYTE
+
+* I'll try the frequency based on the dictionary now.
+
+  * order: EARIOTNSLCUDPMHGBFYWKVXZJQ
+
+  * Wow this plaintext looks even worse: BEUUD OSERL EUEVE UGOPT MAIIB OTDNI
+    WTPRE
+
+* Now to use Lewards: ETAOINSHRDLCUMWFGYPBVKJXQZ
+
+  * result: GELLC ISEAR ELEKE LFIUN MTOOG INCHO BNUAE 
+
+* Use cornell's now: ETAOINSRHDLUCMFYWGPBVKXQJZ
+
+  * result: WELLU ISEAH ELEKE LYICN MTOOW INURO BNCAE 
+
+* At this point I give up. I found an online substitution cypher breaker at:
+  https://www.guballa.de/substitution-solver
+
+  * I fed it my encrypted.txt file which was just my found and krypton4 files
+    combined. I've taken a screenshot in the file online-solver.png.
+
+* I looked up cryptool it looks like its just a community driven e-learning
+  platform about cryptoanalysis. It would be good to find an efficient algorithm
+  to solve this. 
+
+  * Cryptool-online gave me a link for: http://www.cryptoprograms.com which has
+    many different cryptogram solvers. Including this one:
+    http://www.cryptoprograms.com/subsolve/monoalph. It was also able to solve
+    this lab. The cypher is a monoalphabetic cypher because the letters are
+    randomly substituted. I assumed this at the beginning. We are given no other
+    information.
+
+* Ask the irc chat if "cryptool" referred to by the krypton READMEs is talking
+  about the one at cryptool.org.
+
+  * One person said that would be his intuition too. Well, that's better than
+    nothing.
+
+  * The JCrypTool GUI can be downloaded here:
+    https://www.cryptool.org/en/jct-downloads/stable
+
+    * It has a substitution analysis tool through the Tool Bar at: Analysis >
+      Substitution Analysis
+
+      * You can input a file here. It will give you a ton of statistics about
+        the frequencies of single characters, character pairs, and character
+        triplets.
+
+	* This is probably the "right" way to do it. You can by hand go over
+          these statistics and pick substitution mappings until you get
+          plaintext that makes sense. It's kind of tedious to do by hand but
+          good to know. I've included a screenshot in
+          jcryptool-substitution-analysis-tool.png. 
+
+	* The JcrypTool GUI has more features but the GUI is kind of broken.
+
+* I would instead use the online stuff on cryptool.org
+
+  * https://www.cryptool.org/en/cto-cryptanalysis/n-gram-analysis is much more
+    usable. It's essentially the same thing. I have a screenshot in
+    online-n-gram-solver.png.
+
+krypton4 password: BRUTE

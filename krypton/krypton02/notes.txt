@@ -1,0 +1,30 @@
+The README tells us that keyfile.dat is encrypted using a Caesar Cipher which
+means that each character in the alphabet is shifted by X units. It looks like
+everything is also converted to capitals by the encrypt binary.
+
+I created a file that I called plaintext. It's contents were "a\n" encrypt
+created a ciphertext file which contained only "M\n". This means it capitalizes
+a and shifts it by 12 units.
+
+So to decypher the /krypton/krypton2/krypton3 I can left shift the characters by
+12 units or encrypt X number of times were X is a number such that (X * 12) mod
+26 = 0. I'll reuse my code from the last lab. 
+
+I can also rightshift by 14 and make lowercase. It took me a couple attempts but
+I did get the output I wanted. Again, you're given the cyphertext in
+/krypton/krypton2/krypton3. The content is: OMQEMDUEQMEK. What I did is use
+decypher.py to make each char lowercase and then right shifted by 14 units. I
+got this output:
+
+krypton2@krypton:/tmp/my-1234$ ./decypher.py
+Input cyphertext: OMQEMDUEQMEK
+plaintext = caesariseasy
+
+Correction: The password is capitalized like the cyphertext. I'll adjust my
+code.
+
+krypton2@krypton:/tmp/my-1234$ ./decypher.py
+Input cyphertext: OMQEMDUEQMEK
+plaintext = CAESARISEASY
+
+krypton3 password: CAESARISEASY
