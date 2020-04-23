@@ -1,0 +1,27 @@
+Again the decompilation was not helpful.
+
+Here is an example of how you can set a memory address to a string in gdb:
+
+set {char [40]} 0x8048722 = "/etc/leviathan_pass/leviathan6"
+
+I think I may just lookup the password at this point. The only input that I can
+see for the program is from the contents is from /tmp/file.log. In that file
+a filestream is opened and each character is read and then immediately
+printed. I as leviathan5 do not have reading rights to
+/etc/leviathan_pass/leviathan6 but the leviathan5 executable does since the
+setuid bit is set. But I don't see how I can redirect the executable to open the
+password file. I am just lost at this point.
+
+The answer turned out to be creating a symlink which just requires a single
+command:
+
+ln -s /etc/leviathan_pass/leviathan6 /tmp/file.log
+
+And then of course running the executable again.
+
+A symlink is analogous to a shortcut.
+
+https://jhalon.github.io/over-the-wire-leviathan/ was again the resource that I
+used.
+
+leviathan6 password: UgaoFee4li

@@ -1,0 +1,11 @@
+This was the easiest lab so far for me. All I did was cd into the .trash
+directory cat the bin file and use the following link to convert the binary
+strings to ascii text:
+
+https://www.rapidtables.com/convert/number/binary-to-ascii.html
+
+The output was: Tith4cokei which is the password for the next lab
+
+Note: for some strange reason I cannot open dired through tramp for leviathan5
+
+leviathan5 password: Tith4cokei

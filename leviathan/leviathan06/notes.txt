@@ -1,0 +1,31 @@
+#!/bin/bash
+
+for i in $(seq -f "%04g" 0 9999)
+do
+    output=`/home/leviathan6/leviathan6 "$i"`
+    match=`echo "$output" | grep -cE "Wrong"`
+    echo "$i" >> output.txt
+    if [[ $match -ne 1 ]]
+    then
+	touch success.txt
+	echo "i = $i" >> success.txt
+	echo "SUCCESS" >> success.txt
+	echo "$output" >> success.txt
+    fi
+done
+
+The above is the shell script I used. I put this on the server is a tmp
+directory, touched output.txt first (not sure if >> creates a file if it doesn't
+exist). I followed this file with tail -f output.txt in another ssh session. I
+noticed that it stopped after printing 7122. So I tried executing ~/leviathan6
+"7123", this gave me the /bin/sh shell. I then executed cat
+/etc/leviathan_pass/leviathan7 to get the next password. Not really any reverse
+engineering required since the sample space is pretty small. This may not be the
+intended solution. But hey I solved it myself!
+
+On the next lab there is a file called CONGRATULATIONS with contents:
+
+Well Done, you seem to have used a *nix system before, now try something more serious.
+(Please don't post writeups, solutions or spoilers about the games on the web. Thank you!)
+
+leviathan7 password: ahy7MaeBo9
